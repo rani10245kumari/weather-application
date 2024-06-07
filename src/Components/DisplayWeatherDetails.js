@@ -1,11 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import Lottie from "react-lottie";
+import WindSpeedImg from "./Assets/Animation - 1717782969488.json";
+import temperatureImg from "./Assets/Animation - 1717783423666.json";
+import visibilityImg from "./Assets/Animation - 1717783720075.json";
+import humidityImg from "./Assets/Animation - 1717784089976.json";
 
 function DisplayWeatherDetails(props) {
     const data = props.value;
     const newDate = new Date();
     const currentDate = newDate.getDate();
-    const filteredData = data.list.filter((item, index) => Number(item.dt_txt.split(" ")[0].split("-")[2])=== Number(currentDate));
+    const filteredData = data.list.filter((item, index) => Number(item.dt_txt.split(" ")[0].split("-")[2]) === Number(currentDate));
 
     const handleHideShow = (e) => {
         let foreCastContainer = document.querySelector(".weatherForcastContainer");
@@ -13,6 +18,39 @@ function DisplayWeatherDetails(props) {
         foreCastContainer.classList.toggle("activeForeCastContainer");
         showForeCastBtn.textContent = `${foreCastContainer.classList.contains("activeForeCastContainer") ? "Hide" : 'Show'} Next Five Days Forecast`;
     }
+    const windSpeed = {
+        loop: true,
+        autoplay: true,
+        animationData: WindSpeedImg,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
+    const temperature = {
+        loop: true,
+        autoplay: true,
+        animationData: temperatureImg,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
+    const visibility = {
+        loop: true,
+        autoplay: true,
+        animationData: visibilityImg,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
+    const humidity = {
+        loop: true,
+        autoplay: true,
+        animationData: humidityImg,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
+
     return (
         <section className='WeatherContainer'>
             <div className="currentWeatherContainer">
@@ -31,25 +69,25 @@ function DisplayWeatherDetails(props) {
 
                     <div className="infoBox">
                         <p className="infoHeading">Wind Speed</p>
-                        <i className="fa-solid fa-wind WeatherinfoIcon "></i>
+                        <Lottie options={windSpeed} height={100} width={110} className='animation' />
                         <p className='infodata'>{data.list[0].wind.speed} Km/h</p>
                     </div>
 
                     <div className="infoBox">
                         <p className="infoHeading">Feel Like</p>
-                        <i className="fa-solid fa-temperature-low"></i>
+                        <Lottie options={temperature} height={100} width={110} className='animation' />
                         <p className='infodata'>{Math.floor(data.list[0].main.feels_like - 273.15)}<sup>°C</sup></p>
                     </div>
 
                     <div className="infoBox">
                         <p className="infoHeading">Visibility</p>
-                        <i className="fa-solid fa-eye"></i>
+                        <Lottie options={visibility} height={100} width={110} className='animation' />
                         <p className='infodata'>{Number(data.list[0].visibility) / 1000} Km</p>
                     </div>
 
                     <div className="infoBox">
                         <p className="infoHeading">Humidity</p>
-                        <i className="fa-solid fa-shower"></i>
+                        <Lottie options={humidity} height={100} width={110} className='animation' />
                         <p className='infodata'>{data.list[0].main.humidity}%</p>
                     </div>
                 </div>
@@ -57,13 +95,13 @@ function DisplayWeatherDetails(props) {
                 <h3 className='forCaseHeading'>Today's Forcast</h3>
                 <div className="todayForcastContainer">
                     {
-                        filteredData.length > 0 ?filteredData.map((item, index) => {
+                        filteredData.length > 0 ? filteredData.map((item, index) => {
                             return <div className="TforecastBox" key={index}>
                                 <p className="TforeCastTime">{(item.dt_txt.split(" ")[1])}</p>
                                 <img className='TforeCastICon' src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`} alt="ImageNhaihai" />
                                 <h2 className='TforeCasttempLabel'>{Math.floor(item.main.temp - 273.15)}<sup>°C</sup></h2>
                             </div>
-                        }):<p>There is No Data</p>
+                        }) : <p>There is No Data</p>
                     }
                 </div>
 

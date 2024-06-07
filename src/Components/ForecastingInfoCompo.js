@@ -1,16 +1,65 @@
 import React from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import Logo from '../Icon.png'
+import Lottie from "react-lottie";
+import WindSpeedImg from "./Assets/Animation - 1717782969488.json";
+import temperatureImg from "./Assets/Animation - 1717783423666.json";
+import visibilityImg from "./Assets/Animation - 1717783720075.json";
+import humidityImg from "./Assets/Animation - 1717784089976.json";
+import weatherImg from "./Assets/Animation - 1717784731410.json";
+
 
 function ForecastingInfoCompo() {
   let navigateToHome = useNavigate();
   let currentDate = useParams().Date;
   let filteredData = useLocation().state?.list.filter((item) => item.dt_txt.split(" ")[0] === currentDate)
+
+  const windSpeed = {
+    loop: true,
+    autoplay: true,
+    animationData: WindSpeedImg,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+  const temperature = {
+    loop: true,
+    autoplay: true,
+    animationData: temperatureImg,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+  const visibility = {
+    loop: true,
+    autoplay: true,
+    animationData: visibilityImg,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+  const humidity = {
+    loop: true,
+    autoplay: true,
+    animationData: humidityImg,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+  const weathericon = {
+    loop: true,
+    autoplay: true,
+    animationData: weatherImg,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return (
     <section className='FullWeatherInfoContainer'>
       <header>
-        <img src={Logo} alt="WeatherLogo" className='AppLogo' />
-        <h1>Weather Forecast : {currentDate}</h1>
+        <Lottie options={weathericon} height={90} width={90} className='AppLogo' />
+        {/* <img src={Logo} alt="WeatherLogo" className='AppLogo' /> */}
+        <h1 className='head'>Weather Forecast : {currentDate}</h1>
       </header>
 
       <div className='currentWeatherInfoContainer'>
@@ -23,25 +72,25 @@ function ForecastingInfoCompo() {
 
         <div className="infoBox">
           <p className="infoHeading">Wind Speed</p>
-          <i className="fa-solid fa-wind WeatherinfoIcon "></i>
+          <Lottie options={windSpeed} height={100} width={110} className='animation' />
           <p className='infodata'>{filteredData[0].wind.speed} Km/h</p>
         </div>
 
         <div className="infoBox">
           <p className="infoHeading">Feel Like</p>
-          <i className="fa-solid fa-temperature-low"></i>
+          <Lottie options={temperature} height={100} width={110} className='animation' />
           <p className='infodata'>{Math.floor(filteredData[0].main.feels_like - 273.15)}<sup>°C</sup></p>
         </div>
 
         <div className="infoBox">
           <p className="infoHeading">Visibility</p>
-          <i className="fa-solid fa-eye"></i>
+          <Lottie options={visibility} height={100} width={110} className='animation' />
           <p className='infodata'>{Number(filteredData[0].visibility) / 1000} Km</p>
         </div>
 
         <div className="infoBox">
           <p className="infoHeading">Humidity</p>
-          <i className="fa-solid fa-shower"></i>
+          <Lottie options={humidity} height={100} width={110} className='animation' />
           <p className='infodata'>{filteredData[0].main.humidity}%</p>
         </div>
 
@@ -59,7 +108,7 @@ function ForecastingInfoCompo() {
           })
         }
       </div>
-      <button className='showForeCastBtn' onClick={()=> navigateToHome("/")} >Go To Home Page</button>
+      <button className='showForeCastBtn' onClick={() => navigateToHome("/")} >Go To Home Page</button>
 
     </section>
   )
