@@ -1,7 +1,19 @@
 import { useRef, useEffect, useState, lazy, Suspense } from 'react';
 import axios from 'axios';
+import Lottie from "react-lottie";
+import cloudImg from "./Assets/Animation - 1717781150665.json";
+
 let DisplayWeatherDetails = lazy(() => import('./DisplayWeatherDetails'))
 function WeatherCompo() {
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: cloudImg,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
+
     let [isLoading, setLoading] = useState(false);
     let [weatherData, setWeatherData] = useState(null);
     let [cityName, setCityName] = useState('bokaro')
@@ -33,6 +45,7 @@ function WeatherCompo() {
     return (
         <main className='mainContainer'>
             <header>
+                <Lottie options={defaultOptions} height={100} width={110} className='animation' />
                 <input type="text" className="searchInput" placeholder='Search Your City' ref={searchInputRef} />
                 <button className='SearchBtn' onClick={handleSearch}>Search</button>
             </header>
